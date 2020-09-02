@@ -1,4 +1,5 @@
 global start
+extern kmain
 
 section .text
 bits 32
@@ -62,8 +63,8 @@ finish_setup:
         mov ds, ax
         mov es, ax
 
-        ; jump to long mode!
-        jmp gdt64.code:long_mode_start
+        ; jump to long mode and rust entry point!
+        jmp gdt64.code:kmain
 
 helloworld32:
         mov word [0xb8000], 0x0248 ; H
@@ -108,7 +109,8 @@ gdt64:
 section .text
 bits 64
 long_mode_start:
-        mov rax, 0x2f592f412f4b2f4f
-        mov qword [0xb8000], rax
 
-        hlt
+        ;mov rax, 0x2f592f412f4b2f4f
+        ;mov qword [0xb8000], rax
+
+       ; hlt
