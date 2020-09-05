@@ -1,17 +1,13 @@
 [package]
-name = "adamos"
-version = "0.1.0"
 authors = ["Azphelumbra <azphel@nothing.com>"]
 edition = "2018"
+name = "adamos"
+version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 crate-type = ["staticlib"]
 
-[dependencies]
-
-
-[profile.release]
-panic = "abort"
-
-
+# [dependencies.lazy_static]
+# version = "1.4"
+# features = ["spin_no_std"]

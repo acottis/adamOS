@@ -1,23 +1,30 @@
-#![feature(lang_items)]
 #![no_std]
+#![no_main]
+#![feature(lang_items)]
 
 use core::panic::PanicInfo;
 
-#[lang = "eh_personality"]
-extern fn eh_personality() {
-}
-
+// This prevents the kernal panicing
 #[panic_handler]
-extern fn panic(_info: &PanicInfo) -> ! {
-    loop{} 
+extern "C" fn panic(_info: &PanicInfo) -> ! {
+        loop {}
 }
 
-#[no_mangle]
-pub extern fn kmain() -> ! {
-        unsafe {
-                let vga = 0xb8000 as *mut u64;
+// This stops  g
+#[lang = "eh_personality"]
+extern "C" fn eh_personality() {}
 
-                *vga = 0x2f592f412f4b2f4f;
-        }
-        loop { }
+
+// --------------------
+
+mod vga_buffer;
+
+
+// Entry point
+#[no_mangle]
+pub extern "C" fn kmain() -> ! {
+
+        vga_buffer::print_something();
+
+        loop {}
 }
