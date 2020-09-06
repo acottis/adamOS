@@ -1,7 +1,7 @@
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
-pub enum Color {
+enum Color {
     Black = 0,
     Blue = 1,
     Green = 2,
@@ -54,7 +54,7 @@ struct Buffer {
     chars: [[ScreenChar; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }
 
-pub struct Writer {
+struct Writer {
     column_position: usize,
     row_position: usize,
     color_code: ColorCode,
@@ -94,7 +94,7 @@ impl Writer {
         }
     }
 
-    pub fn write_string(&mut self, s: &str) {
+    fn write_string(&mut self, s: &str) {
         for byte in s.bytes() {
             match byte {
                 // 0x20 - 0x7e are valid ascii characters to print
@@ -135,7 +135,7 @@ use spin::Mutex;
 use lazy_static::lazy_static;
 
 lazy_static! {
-    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
+    static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         column_position: BUFFER_WIDTH - BUFFER_WIDTH,
         row_position: BUFFER_HEIGHT - 1,
         color_code: ColorCode::new(Color::Green, Color::Black),
