@@ -114,24 +114,33 @@ impl fmt::Write for Writer {
         Ok(())
     }
 }
-pub fn print_something() {
-    use core::fmt::Write;
-    let mut writer = Writer {
+
+// OLD TEST CODE
+// pub fn print_something() {
+//     use core::fmt::Write;
+//     let mut writer = Writer {
+//         column_position: BUFFER_WIDTH - BUFFER_WIDTH,
+//         row_position: BUFFER_HEIGHT - 1,
+//         color_code: ColorCode::new(Color::Green, Color::Black),
+//         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+//     };
+
+//     writer.write_string("H\n");
+//     writer.write_string("ello \n안녕하세요");
+//     writer.write_string("Wörld! NAOMI\n");
+//     write!(writer, "The numbers are {} \nand {}", 42, 1.0 / 3.0).unwrap();
+// }
+
+use spin::Mutex;
+use lazy_static::lazy_static;
+
+lazy_static! {
+    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         column_position: BUFFER_WIDTH - BUFFER_WIDTH,
         row_position: BUFFER_HEIGHT - 1,
         color_code: ColorCode::new(Color::Green, Color::Black),
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
-    };
-
-    writer.write_string("H\n");
-    writer.write_string("ello \n안녕하세요");
-    writer.write_string("Wörld! NAOMI\n");
-    write!(writer, "The numbers are {} \nand {}", 42, 1.0 / 3.0);
+    });
 }
 
-// pub static WRITER: Writer = Writer {
-//     column_position: BUFFER_WIDTH - BUFFER_WIDTH,
-//     row_position: BUFFER_HEIGHT - 1,
-//     color_code: ColorCode::new(Color::Green, Color::Black),
-//     buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
-// };
+

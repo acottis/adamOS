@@ -28,7 +28,7 @@ run: target/os.iso
 build: target/os.iso
 
 cargo: 
-	xargo build --release --target=x86_64-unknown-adamos
+	@RUST_TARGET_PATH=$(shell pwd) xargo build --release --target=x86_64-unknown-adamos
 
 clean:
 	cargo clean

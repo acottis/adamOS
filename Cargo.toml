@@ -8,6 +8,9 @@ version = "0.1.0"
 [lib]
 crate-type = ["staticlib"]
 
-# [dependencies.lazy_static]
-# version = "1.4"
-# features = ["spin_no_std"]
+[dependencies]
+spin = "0.5.2"
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]
